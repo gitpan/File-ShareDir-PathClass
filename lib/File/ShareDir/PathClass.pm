@@ -1,18 +1,18 @@
-# 
+#
 # This file is part of File-ShareDir-PathClass
-# 
+#
 # This software is copyright (c) 2010 by Jerome Quelin.
-# 
+#
 # This is free software; you can redistribute it and/or modify it under
 # the same terms as the Perl 5 programming language system itself.
-# 
+#
 use 5.010;
 use strict;
 use warnings;
 
 package File::ShareDir::PathClass;
-BEGIN {
-  $File::ShareDir::PathClass::VERSION = '1.101620';
+{
+  $File::ShareDir::PathClass::VERSION = '1.112440';
 }
 # ABSTRACT: File::ShareDir returning Path::Class objects
 
@@ -33,7 +33,7 @@ foreach my $sub ( @File::ShareDir::EXPORT_OK ) {
         # ... that just pass through to file::sharedir method...
         my $result = "File::ShareDir::$sub"->(@_);
         # ... and wrap the result as a path::class object
-        return dir( $result );
+        return $sub =~ /_file\z/ ? file( $result ) : dir( $result );
     };
 }
 
@@ -48,7 +48,7 @@ File::ShareDir::PathClass - File::ShareDir returning Path::Class objects
 
 =head1 VERSION
 
-version 1.101620
+version 1.112440
 
 =head1 SYNOPSIS
 
@@ -100,9 +100,9 @@ Otherwise, functions are available as class methods, called as:
 
 In this case, one doesn't need to import anything during module use-age.
 
-=for Pod::Coverage ^dist_
-    ^module_
-    ^class_
+=for Pod::Coverage dist_.*
+    module_.*
+    class_.*
 
 =head1 SEE ALSO
 
@@ -132,7 +132,7 @@ L<http://github.com/jquelin/file-sharedir-pathclass.git>.
 
 =head1 AUTHOR
 
-  Jerome Quelin
+Jerome Quelin
 
 =head1 COPYRIGHT AND LICENSE
 
